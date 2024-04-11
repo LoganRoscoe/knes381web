@@ -57,7 +57,7 @@ plugins:
 
 author:
   name   : "Logan Roscoe"
-  avatar : "/assets/images/bio-photo.jpg"
+  avatar : "assets/images/Logan_Roscoe.jpg"
   bio    : "Bachelor of Kinesiology | University of Calgary"
   links:
     - label: "Website"
