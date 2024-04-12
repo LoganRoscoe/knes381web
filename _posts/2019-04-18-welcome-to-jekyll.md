@@ -9,7 +9,7 @@ tags:
   - image
 ---
 
-The code displayed demonstrates the construction of two graphs. The first displays VO2, VE, and VCO2 plotted over time. The second graph displays VCO2, FECO2, and FEO2 plotted over VO2 with the appropriate ventilatory exhange thresholds. 
+The code displayed demonstrates the construction of two graphs. Figure 1 displays VO2, VE, and VCO2 plotted over time. Figure 2 displays VCO2, FECO2, and FEO2 plotted over VO2 with the appropriate ventilatory exhange thresholds. 
 
 ```yaml
 
