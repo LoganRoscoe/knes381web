@@ -1,5 +1,5 @@
 ---
-title: "Welcome to Jekyll!"
+title: "Python Coding"
 date: 2019-04-18T15:34:30-04:00
 categories:
   - blog
@@ -8,22 +8,105 @@ tags:
   - update
 ---
 
-You'll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
+The code displayed demonstrates the construction of two graphs. The first displays VO2, VE, and VCO2 plotted over time. The second graph displays VCO2, FECO2, and FEO2 plotted over VO2 with the appropriate ventilatory exhange thresholds. 
+'''yaml
+### Now all together in one code block that could run independently...
+# lets take care of importing everything we need at once
 
-To add new posts, simply add a file in the `_posts` directory that follows the convention `YYYY-MM-DD-name-of-post.ext` and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.
+import numpy as np # linear algebra
+import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
+import matplotlib.pyplot as plt
 
-Jekyll also offers powerful support for code snippets:
+# Lets read in our file now
+df = pd.read_csv('../input/demo-knes381/subject_1232.csv', header=[0], skiprows=[1,2,3])
 
-```ruby
-def print_hi(name)
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
-#=> prints 'Hi, Tom' to STDOUT.
-```
+# please note that while this is an output file from the parvo-metabolics cart we have
+# I have edited this data set and simplied the header file on it
 
-Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
+# rename our column headers
+df = df.rename(columns={'VE/': 'VE/VO2','VE/.1': 'VE/VCO2'})
 
-[jekyll-docs]: https://jekyllrb.com/docs/home
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-talk]: https://talk.jekyllrb.com/
+# simplify our terms to reduce future typing... 
+# it is easier to write plot x, y than plot df['Time'], df['VO2']
+x = df['TIME']
+y = df['VO2']
+y1 = df['VE']
+y2 = df['VCO2']
+y3 = df['FEO2']
+y4 = df['FECO2']
+
+#Find VO2 max value 
+ymax = max(y)
+
+# find the x position of the ymax value or where ymax occurs on the x axis
+xmax = x[y.argmax()]
+
+fig, ax = plt.subplots(3, 1, sharex=True, figsize=(8, 10)) # Note I increased the figure size here.
+
+# this line seperates the two plots...
+fig.subplots_adjust(hspace=0)
+
+# annotate the position of V02 max before plotting the value, we could do this later but why.
+
+ax[0].annotate('$\dot VO_2max$ =({}) L/min'.format(round(ymax, 2)), 
+               xy=(xmax, ymax), xytext=(xmax+.5, ymax+ .5),
+               arrowprops=dict(facecolor='red', shrink= 0.05),
+                )
+
+ax[0].plot(x, y, label=('$\dot VO_2$'), c='r', linestyle='-' )
+# in the line of code below I hide the top and right black bars serrounding the plot for APA format.
+ax[0].spines[['right', 'top']].set_visible(False)
+ax[0].set(ylabel=('L/min'))
+ax[0].set(xlabel=('Time(min)'))
+ax[0].legend()
+#note all these set features could be added in one line but reading it would be difficult
+
+# Second plot of values down from the top
+ax[1].plot(x, y1, label=('VE'), c='b', linestyle='-')
+ax[1].spines[['top', 'right']].set_visible(False)
+ax[1].set(ylabel=('breaths/min'))
+ax[1].set(xlabel=('Time(min)'))
+ax[1].legend()
+
+
+ax[2].plot(x, y2, label=('VCO2'), c='g',linestyle='-')
+ax[2].spines[['top', 'right']].set_visible(False)
+ax[2].set(ylabel=('L/min'))
+ax[2].set(xlabel=('Time(min)'))
+ax[2].legend()
+
+fig.savefig("VO2-VE-4.png", dpi=300, bbox_inches = "tight")
+fig.show()
+
+fig, ax = plt.subplots(3, 1, sharex=True, figsize=(8, 10))  # Increased figure size for the third subplot
+
+fig.subplots_adjust(hspace=0)
+
+ax[0].plot(y, y4, 'o', label=('FEO2'), c='r')
+ax[0].spines[['top', 'right']].set_visible(False)
+ax[0].set(ylabel=('BPM'))
+ax[0].set(xlabel=('VO2(L/min)'))
+ax[0].legend()
+
+ax[1].plot(y, y3, 'o', label=('FECO2'), c='b')
+ax[1].spines[['top', 'right']].set_visible(False)
+ax[1].set(ylabel=('%'))
+ax[1].set(xlabel=('VO2(L/min)'))
+ax[1].legend()
+
+ax[2].plot(y, y2, 'o', label=('VCO2'), c='g')
+ax[2].spines[['top', 'right']].set_visible(False)
+ax[2].set(ylabel=('%'), xlabel=('VO2(L/min)'))
+ax[2].legend()
+
+ax[0].axvline(x=2, color='m', linestyle='-', label='Gas Exchange Threshold')
+ax[0].axvline(x=3.685, color='m', linestyle='-', label='Respiratory Compensation')
+ax[1].axvline(x=2, color='m', linestyle='-', label='Gas Exchange Threshold')
+ax[1].axvline(x=3.685, color='m', linestyle='-', label='Respiratory Compensation')
+ax[2].axvline(x=2, color='m', linestyle='-', label='Gas Exchange Threshold')
+ax[2].axvline(x=3.685, color='m', linestyle='-', label='Respiratory Compensation')
+
+fig.savefig("VO2-VE-FECO2-VCO2.png", dpi=300, bbox_inches="tight")
+fig.show()
+'''
+
