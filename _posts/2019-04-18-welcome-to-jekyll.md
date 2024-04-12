@@ -97,3 +97,6 @@ fig.savefig("VO2-VE-FECO2-VCO2.png", dpi=300, bbox_inches="tight")
 fig.show()
 ```
 
+---
+image: /assets/images/Screenshot 2024-04-11 171150.png
+
