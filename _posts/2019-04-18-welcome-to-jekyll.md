@@ -21,8 +21,6 @@ df = pd.read_csv('../input/demo-knes381/subject_1232.csv', header=[0], skiprows=
 
 df = df.rename(columns={'VE/': 'VE/VO2','VE/.1': 'VE/VCO2'})
 
-# simplify our terms to reduce future typing... 
-# it is easier to write plot x, y than plot df['Time'], df['VO2']
 x = df['TIME']
 y = df['VO2']
 y1 = df['VE']
@@ -38,15 +36,13 @@ fig, ax = plt.subplots(3, 1, sharex=True, figsize=(8, 10)) # Note I increased th
 
 fig.subplots_adjust(hspace=0)
 
-# annotate the position of V02 max before plotting the value, we could do this later but why.
-
 ax[0].annotate('$\dot VO_2max$ =({}) L/min'.format(round(ymax, 2)), 
                xy=(xmax, ymax), xytext=(xmax+.5, ymax+ .5),
                arrowprops=dict(facecolor='red', shrink= 0.05),
                 )
 
 ax[0].plot(x, y, label=('$\dot VO_2$'), c='r', linestyle='-' )
-# in the line of code below I hide the top and right black bars serrounding the plot for APA format.
+
 ax[0].spines[['right', 'top']].set_visible(False)
 ax[0].set(ylabel=('L/min'))
 ax[0].set(xlabel=('Time(min)'))
