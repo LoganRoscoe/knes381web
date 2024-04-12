@@ -10,7 +10,7 @@ tags:
 
 The code displayed demonstrates the construction of two graphs. The first displays VO2, VE, and VCO2 plotted over time. The second graph displays VCO2, FECO2, and FEO2 plotted over VO2 with the appropriate ventilatory exhange thresholds. 
 
-'''
+```yaml
 
 import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
@@ -95,5 +95,5 @@ ax[2].axvline(x=3.685, color='m', linestyle='-', label='Respiratory Compensation
 
 fig.savefig("VO2-VE-FECO2-VCO2.png", dpi=300, bbox_inches="tight")
 fig.show()
-'''
+```
 
