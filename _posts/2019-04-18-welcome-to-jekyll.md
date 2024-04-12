@@ -100,12 +100,6 @@ fig.show()
 
 ---
 
-
-{% capture fig_img %}
-![Foo]({{ "assets/images/Screenshot 2024-04-11 171150.png" | relative_url }})
-{% endcapture %}
-
-<figure>
-  {{ fig_img | markdownify | remove: "<p>" | remove: "</p>" }}
-  <figcaption>Figure 1.</figcaption>
-</figure>
+```markdown
+{% raw %}![alt](assets/images/Screenshot 2024-04-11 171150.png){% endraw %}
+```
