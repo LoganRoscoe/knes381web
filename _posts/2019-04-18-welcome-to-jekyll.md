@@ -100,18 +100,26 @@ fig.show()
 
 ---
 
-```markdown
-{% raw %}![alt](assets/images/Screenshot 2024-04-11 171150.png){% endraw %}
-```
+{% capture fig_img %}
+![Foo]({{ "assets/images/Screenshot 2024-04-11 171150.png" | relative_url }})
+{% endcapture %}
+
+<figure>
+  {{ fig_img | markdownify | remove: "<p>" | remove: "</p>" }}
+  <figcaption>Figure 1.</figcaption>
+</figure>
+
 ---
 
-Figure (1)
-
 ---
 
-```markdown
-{% raw %}![alt](assets/images/Screenshot 2024-04-11 171202.png){% endraw %}
-```
----
+{% capture fig_img %}
+![Foo]({{ "assets/images/Screenshot 2024-04-11 171202.png" | relative_url }})
+{% endcapture %}
 
-Figure (2)
+<figure>
+  {{ fig_img | markdownify | remove: "<p>" | remove: "</p>" }}
+  <figcaption>Figure 1.</figcaption>
+</figure>
+
+---
