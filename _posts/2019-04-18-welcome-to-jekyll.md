@@ -103,11 +103,15 @@ fig.show()
 ```markdown
 {% raw %}![alt](assets/images/Screenshot 2024-04-11 171150.png){% endraw %}
 ```
+---
 
 Figure (1)
+
+---
 
 ```markdown
 {% raw %}![alt](assets/images/Screenshot 2024-04-11 171202.png){% endraw %}
 ```
+---
 
 Figure (2)
