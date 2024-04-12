@@ -119,7 +119,7 @@ fig.show()
 
 <figure>
   {{ fig_img | markdownify | remove: "<p>" | remove: "</p>" }}
-  <figcaption>Figure 1.</figcaption>
+  <figcaption>Figure 2.</figcaption>
 </figure>
 
 ---
