@@ -11,20 +11,14 @@ tags:
 The code displayed demonstrates the construction of two graphs. The first displays VO2, VE, and VCO2 plotted over time. The second graph displays VCO2, FECO2, and FEO2 plotted over VO2 with the appropriate ventilatory exhange thresholds. 
 
 '''yaml
-### Now all together in one code block that could run independently...
-# lets take care of importing everything we need at once
 
 import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 import matplotlib.pyplot as plt
 
-# Lets read in our file now
+
 df = pd.read_csv('../input/demo-knes381/subject_1232.csv', header=[0], skiprows=[1,2,3])
 
-# please note that while this is an output file from the parvo-metabolics cart we have
-# I have edited this data set and simplied the header file on it
-
-# rename our column headers
 df = df.rename(columns={'VE/': 'VE/VO2','VE/.1': 'VE/VCO2'})
 
 # simplify our terms to reduce future typing... 
@@ -35,16 +29,13 @@ y1 = df['VE']
 y2 = df['VCO2']
 y3 = df['FEO2']
 y4 = df['FECO2']
-
-#Find VO2 max value 
+ 
 ymax = max(y)
 
-# find the x position of the ymax value or where ymax occurs on the x axis
 xmax = x[y.argmax()]
 
 fig, ax = plt.subplots(3, 1, sharex=True, figsize=(8, 10)) # Note I increased the figure size here.
 
-# this line seperates the two plots...
 fig.subplots_adjust(hspace=0)
 
 # annotate the position of V02 max before plotting the value, we could do this later but why.
@@ -60,9 +51,8 @@ ax[0].spines[['right', 'top']].set_visible(False)
 ax[0].set(ylabel=('L/min'))
 ax[0].set(xlabel=('Time(min)'))
 ax[0].legend()
-#note all these set features could be added in one line but reading it would be difficult
 
-# Second plot of values down from the top
+
 ax[1].plot(x, y1, label=('VE'), c='b', linestyle='-')
 ax[1].spines[['top', 'right']].set_visible(False)
 ax[1].set(ylabel=('breaths/min'))
